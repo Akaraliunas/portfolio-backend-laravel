@@ -23,8 +23,19 @@ class ExperienceResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+                Forms\Components\TextInput::make('company_name')
+                    ->required(),
+                Forms\Components\TextInput::make('role')
+                    ->required(),
+                Forms\Components\TextInput::make('period')
+                    ->placeholder('e.g. 2022 - Present'),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\TagsInput::make('technologies'),
+                Forms\Components\TextInput::make('order')
+                    ->numeric()
+                    ->default(0),
+        ]);
     }
 
     public static function table(Table $table): Table

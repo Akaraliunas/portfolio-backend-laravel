@@ -23,7 +23,8 @@ class AboutResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('full_name') // Įsitikink, kad čia 'full_name'
+                ->required(), // Pridėk validaciją, kad klaida nepasiektų DB
             ]);
     }
 
