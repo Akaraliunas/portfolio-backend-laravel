@@ -5,7 +5,10 @@ return [
     'allowed_methods' => ['*'],
     'allowed_origins' => [
         env('FRONTEND_URL', 'http://karaliunas.dev'),
-        'https://backend.karaliunas.dev', // Update with your Vercel domain
+        'https://backend.karaliunas.dev',
+        'https://karaliunas.dev',
+        'http://localhost:3000',
+        'http://localhost:8000',
     ],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
