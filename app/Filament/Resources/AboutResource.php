@@ -2,72 +2,28 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\AboutResource\Pages;
+use App\Filament\Resources\AboutResource\RelationManagers;
 use App\Models\About;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Repeater;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AboutResource extends Resource
 {
     protected static ?string $model = About::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
-
-    protected static ?string $navigationGroup = 'Portfolio';
-
-    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Basic Information')
-                    ->schema([
-                        Forms\Components\TextInput::make('full_name')
-                            ->required()
-                            ->maxLength(255),
-
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->maxLength(255)
-                            ->placeholder('e.g., Senior Magento Developer'),
-
-                        Forms\Components\MarkdownEditor::make('bio')
-                            ->required()
-                            ->columnSpanFull()
-                            ->placeholder('Write your professional bio...'),
-
-                        Forms\Components\FileUpload::make('profile_image')
-                            ->image()
-                            ->disk('public')
-                            ->directory('about')
-                            ->visibility('public')
-                            ->columnSpanFull(),
-                    ]),
-
-                Section::make('Links & Resources')
-                    ->schema([
-                        Forms\Components\TextInput::make('cv_link')
-                            ->url()
-                            ->placeholder('https://example.com/cv.pdf'),
-
-                        Forms\Components\Repeater::make('social_links')
-                            ->addActionLabel('Add Social Link')
-                            ->schema([
-                                Forms\Components\TextInput::make('platform')
-                                    ->required()
-                                    ->placeholder('twitter, github, linkedin, etc.'),
-                                Forms\Components\TextInput::make('url')
-                                    ->required()
-                                    ->url()
-                                    ->placeholder('https://...'),
-                            ])
-                            ->columnSpanFull(),
-                    ]),
+                //
             ]);
     }
 
@@ -75,14 +31,7 @@ class AboutResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('full_name')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable(),
+                //
             ])
             ->filters([
                 //
@@ -91,16 +40,25 @@ class AboutResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
-            ])
-            ->paginated(false);
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\AboutResource\Pages\ListAbouts::route('/'),
-            'edit' => \App\Filament\Resources\AboutResource\Pages\EditAbout::route('/{record}/edit'),
+            'index' => Pages\ListAbouts::route('/'),
+            'create' => Pages\CreateAbout::route('/create'),
+            'edit' => Pages\EditAbout::route('/{record}/edit'),
         ];
     }
 }
