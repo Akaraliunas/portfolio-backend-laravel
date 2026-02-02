@@ -42,7 +42,7 @@ class ExperienceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('company_name')
                     ->searchable()
                     ->sortable(),
 
