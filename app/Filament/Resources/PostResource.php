@@ -23,7 +23,27 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', str()->slug($state))),
+
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->unique(ignoreRecord: true),
+
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                    ])
+                    ->default('draft')
+                    ->required(),
+
+                Forms\Components\DateTimePicker::make('published_at'),
+
+                Forms\Components\RichEditor::make('content')
+                    ->columnSpanFull(),
             ]);
     }
 

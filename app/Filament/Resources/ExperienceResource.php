@@ -42,16 +42,46 @@ class ExperienceResource extends Resource
     {
         return $table
             ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('slug')
+                    ->color('gray')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                // Vizualus statuso indikatorius (Badge)
+                Tables\Columns\SelectColumn::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                    ])
+                    ->selectablePlaceholder(false),
+
+                Tables\Columns\TextColumn::make('published_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->label('Published Date'),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                ])
+                ->filters([
+                    // Leidžia greitai atfiltruoti tik publikuotus postus
+                    Tables\Filters\SelectFilter::make('status')
+                        ->options([
+                            'draft' => 'Draft',
+                            'published' => 'Published',
+                        ]),
+                ])
+                ->actions([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                ->bulkActions([
+                    Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

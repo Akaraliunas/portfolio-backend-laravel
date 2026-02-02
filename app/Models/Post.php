@@ -20,10 +20,12 @@ class Post extends Model
 
     protected static function booted(): void
     {
-        static::addGlobalScope('published', function ($query) {
-            $query->where('status', 'published')
-                ->whereNotNull('published_at');
-        });
+        if (!app()->runningInConsole() && !request()->is('admin*')) {
+            static::addGlobalScope('published', function ($query) {
+                $query->where('status', 'published')
+                    ->whereNotNull('published_at');
+            });
+        }
     }
 
     public function scopePublished($query)
