@@ -24,7 +24,15 @@ class AboutResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('full_name') // Įsitikink, kad čia 'full_name'
-                ->required(), // Pridėk validaciją, kad klaida nepasiektų DB
+                    ->required(),
+                Forms\Components\TextInput::make('title')
+                    ->required(),
+                Forms\Components\TextArea::make('bio')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('profile_image')
+                    ->default(0),
+                Forms\Components\TextInput::make('cv_link')
+                    ->default(0),
             ]);
     }
 

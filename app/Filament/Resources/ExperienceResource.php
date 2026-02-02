@@ -45,32 +45,40 @@ class ExperienceResource extends Resource
                 Tables\Columns\TextColumn::make('company_name')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('company_name')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('role')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('period')
-                    ->searchable()
-                    ->sortable(),
+                    ->badge() // Vizualiai išskiria laikotarpį
+                    ->color('info'),
 
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('technologies')
+                    ->badge()
+                    ->separator(',') // Jei DB saugoma kaip stringas, atskirtas kableliais
+                    ->limitList(3), // Rodo tik pirmas 3, kad neužkimštų lentelės
+
+                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                ])
-                ->filters([
-                    // Leidžia greitai atfiltruoti tik publikuotus postus
-                ])
-                ->actions([
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
-                ])
-                ->bulkActions([
-                    Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ])
+            ->filters([
+                // Leidžia greitai atfiltruoti tik publikuotus postus
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
     }
 
     public static function getRelations(): array

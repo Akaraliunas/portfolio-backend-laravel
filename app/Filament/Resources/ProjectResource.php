@@ -23,7 +23,21 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                    ->required(),
+                Forms\Components\TextInput::make('description')
+                    ->required(),
+                Forms\Components\FileUpload::make('thumbnail')
+                    ->image() // Leidžia tik nuotraukų formatus
+                    ->directory('posts/thumbnails') // Sugrupuos failus serveryje
+                    ->imageEditor() // Leis apkarpyti nuotrauką tiesiai naršyklėje
+                    ->required(),
+                Forms\Components\TextInput::make('tech_stack')
+                    ->required(),
+                Forms\Components\TextInput::make('github_link')
+                    ->required(),
+                Forms\Components\TextInput::make('live_link')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +45,21 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->circular() // Padaro nuotrauką apvalią (nebūtina, bet atrodo moderniai)
+                    ->label('Nuotrauka'),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
             ])
             ->filters([
                 //
