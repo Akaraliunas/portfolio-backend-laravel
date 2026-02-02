@@ -46,22 +46,13 @@ class ExperienceResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('slug')
-                    ->color('gray')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('role')
+                    ->searchable()
+                    ->sortable(),
 
-                // Vizualus statuso indikatorius (Badge)
-                Tables\Columns\SelectColumn::make('status')
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                    ])
-                    ->selectablePlaceholder(false),
-
-                Tables\Columns\TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->label('Published Date'),
+                Tables\Columns\TextColumn::make('period')
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -70,11 +61,6 @@ class ExperienceResource extends Resource
                 ])
                 ->filters([
                     // Leidžia greitai atfiltruoti tik publikuotus postus
-                    Tables\Filters\SelectFilter::make('status')
-                        ->options([
-                            'draft' => 'Draft',
-                            'published' => 'Published',
-                        ]),
                 ])
                 ->actions([
                     Tables\Actions\EditAction::make(),
