@@ -46,6 +46,7 @@ class PostController
             'content' => $post->content,
             'published_at' => $post->published_at?->toIso8601String(),
             'created_at' => $post->created_at->toIso8601String(),
+            'reading_time' => ceil(str_word_count(strip_tags($post->content)) / 200),
         ]);
     }
 }
