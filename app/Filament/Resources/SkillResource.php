@@ -23,15 +23,37 @@ class SkillResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+            Forms\Components\Section::make('Main Info')
+                ->schema([
+                    Forms\Components\TextInput::make('category')->required(),
+                    Forms\Components\TextInput::make('description')->required(),
+                    Forms\Components\FileUpload::make('icon')
+                        ->directory('skills')
+                        ->image(),
+                    Forms\Components\TextInput::make('order')
+                        ->numeric()
+                        ->default(0),
+                ])->columns(2),
+
+            Forms\Components\Section::make('Details')
+                ->schema([
+                    Forms\Components\Repeater::make('sub_skills')
+                        ->schema([
+                            Forms\Components\TextInput::make('name')->required(),
+                        ])
+                        ->collapsible(),
+                ]),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('category')->sortable()->searchable(),
+                Tables\Columns\ImageColumn::make('icon'),
+                Tables\Columns\TextColumn::make('order')->sortable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -9,21 +9,27 @@ class SkillController
 {
     public function index(): JsonResponse
     {
-        $skills = Skill::all()
-            ->groupBy('category')
-            ->map(fn($group) => $group->map(fn($skill) => [
-                'id' => $skill->id,
-                'category' => $skill->category,
-                'icon' => $skill->icon,
-                'icon_url' => $skill->getIconUrl(),
-                'description' => $skill->description,
-                'sub_skills' => $skill->sub_skills ?? [],
-                'order' => $skill->order,
-            ])->toArray())
-            ->toArray();
+        $skills = Skill::query()
+            ->orderBy('order')
+            ->get()
+            ->groupBy('category');
 
+        // We wrap the grouped collection with our Resource
         return response()->json([
-            'data' => $skills,
+            'data' => $skills->map(fn($group) => SkillResource::collection($group)),
         ]);
+    }
+
+    public function toArray($request): array
+    {
+        return [
+            'id' => $this->id,
+            'category' => $this->category,
+            'icon' => $this->icon,
+            'icon_url' => $this->getIconUrl(),
+            'description' => $this->description,
+            'sub_skills' => $this->sub_skills ?? [],
+            'order' => $this->order,
+        ];
     }
 }

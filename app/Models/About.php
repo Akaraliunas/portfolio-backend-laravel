@@ -31,6 +31,11 @@ class About extends Model implements HasMedia
 
     public function getProfileImageUrl(): ?string
     {
-        return $this->getFirstMediaUrl('profile_image') ?: null;
+        if (!$this->profile_image) {
+            return null; // Or a path to a default placeholder
+        }
+
+        // Since you're likely using the local disk or S3 via Filament
+        return asset('storage/' . $this->profile_image);
     }
 }
