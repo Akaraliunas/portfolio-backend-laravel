@@ -15,6 +15,10 @@ class ContactController extends Controller
     {
         $key = 'contact-form:' . $request->ip();
 
+        if (!empty($request->website)) {
+            return response()->json(['message' => 'Message sent!'], 201); // Fake success
+        }
+
         if (RateLimiter::tooManyAttempts($key, 3)) {
             return response()->json([
                 'message' => 'Too many contact form submissions. Please try again later.',
