@@ -27,9 +27,7 @@ class SkillResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('category')->required(),
                     Forms\Components\TextInput::make('description')->required(),
-                    Forms\Components\FileUpload::make('icon')
-                        ->directory('skills')
-                        ->image(),
+                    Forms\Components\TextInput::make('icon'),
                     Forms\Components\TextInput::make('order')
                         ->numeric()
                         ->default(0),
@@ -51,7 +49,7 @@ class SkillResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category')->sortable()->searchable(),
-                Tables\Columns\ImageColumn::make('icon'),
+                Tables\Columns\TextColumn::make('icon'),
                 Tables\Columns\TextColumn::make('order')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -22,8 +22,8 @@ class AboutResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-           ->schema([
-            Forms\Components\Section::make('Personal Information')
+            ->schema([
+                Forms\Components\Section::make('Personal Information')
                 ->schema([
                     Forms\Components\TextInput::make('full_name')
                         ->required(),
@@ -34,7 +34,7 @@ class AboutResource extends Resource
                         ->columnSpanFull(),
                 ])->columns(2),
 
-            Forms\Components\Section::make('Assets')
+                Forms\Components\Section::make('Assets')
                 ->schema([
                     Forms\Components\FileUpload::make('profile_image')
                         ->image()
@@ -45,7 +45,7 @@ class AboutResource extends Resource
                         ->directory('cvs')
                         ->acceptedFileTypes(['application/pdf']),
                 ])->columns(2),
-        ]);
+            ]);
     }
 
     public static function table(Table $table): Table

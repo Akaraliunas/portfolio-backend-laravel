@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class PostController
 {
@@ -26,7 +27,7 @@ class PostController
                 'id' => $post->id,
                 'title' => $post->title,
                 'slug' => $post->slug,
-                'description' => $post->description, // arba Str::limit($post->content, 150)
+                'description' => Str::limit($post->content, 150),
                 'thumbnail' => $post->thumbnail ? asset('storage/' . $post->thumbnail) : null,
                 'published_at' => $post->published_at,
             ])
