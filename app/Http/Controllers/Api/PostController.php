@@ -22,7 +22,14 @@ class PostController
             ]);
 
         return response()->json([
-            'data' => $posts,
+            'data' => Post::published()->latest()->get()->map(fn($post) => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'slug' => $post->slug,
+                'description' => $post->description, // arba Str::limit($post->content, 150)
+                'thumbnail' => $post->thumbnail ? asset('storage/' . $post->thumbnail) : null,
+                'published_at' => $post->published_at,
+            ])
         ]);
     }
 
