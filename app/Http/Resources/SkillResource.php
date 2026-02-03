@@ -12,8 +12,15 @@ class SkillResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'category' => $this->category,
+            'icon_url' => $this->getIconUrl(), // Your custom model method
+            'description' => $this->description,
+            'sub_skills' => $this->sub_skills ?? [],
+            'order' => $this->order,
+        ];
     }
 }

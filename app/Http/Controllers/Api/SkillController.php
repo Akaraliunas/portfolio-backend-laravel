@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Skill;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\SkillResource;
 
 class SkillController
 {
