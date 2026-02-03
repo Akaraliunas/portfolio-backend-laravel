@@ -27,7 +27,6 @@ class SkillController
             'id' => $this->id,
             'category' => $this->category,
             'icon' => $this->icon,
-            'icon_url' => $this->getIconUrl(),
             'description' => $this->description,
             'sub_skills' => $this->sub_skills ?? [],
             'order' => $this->order,
