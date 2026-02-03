@@ -12,12 +12,11 @@ class SkillController
     {
         $skills = Skill::query()
             ->orderBy('order')
-            ->get()
-            ->groupBy('category');
+            ->get(); // Remove ->groupBy('category')
 
-        // We wrap the grouped collection with our Resource
         return response()->json([
-            'data' => $skills->map(fn($group) => SkillResource::collection($group)),
+            // Now it returns a simple flat array
+            'data' => SkillResource::collection($skills),
         ]);
     }
 
