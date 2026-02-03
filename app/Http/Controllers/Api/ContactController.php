@@ -34,7 +34,7 @@ class ContactController extends Controller
         // Validate the merged data
         $validator = Validator::make($data, [
             'name'    => 'required|string|max:255',
-            'email'   => 'required|email|max:255',
+            'email' => 'required|email:rfc,dns|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:5000',
         ]);
@@ -46,7 +46,9 @@ class ContactController extends Controller
             ], 422);
         }
 
-        $validated = $validator->validated();
+        $validated = array_merge($validator->validated(), [
+            'message' => strip_tags($request->input('message'))
+        ]);
 
         try {
             // 1. Save to Database
