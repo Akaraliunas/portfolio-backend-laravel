@@ -27,7 +27,7 @@ class PostController
                 'id' => $post->id,
                 'title' => $post->title,
                 'slug' => $post->slug,
-                'description' => Str::limit($post->content, 400),
+                'description' => Str::limit(strip_tags($post->content), 400),
                 'thumbnail' => $post->thumbnail ? asset('storage/' . $post->thumbnail) : null,
                 'published_at' => $post->published_at,
             ])
