@@ -36,9 +36,4 @@ class Skill extends Model implements HasMedia
             ->singleFile()
             ->useDisk('public');
     }
-
-    public function getIconUrl(): ?string
-    {
-        return $this->getFirstMediaUrl('icon') ?: null;
-    }
 }

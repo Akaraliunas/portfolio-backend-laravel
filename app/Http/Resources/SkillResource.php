@@ -17,7 +17,7 @@ class SkillResource extends JsonResource
         return [
             'id' => $this->id,
             'category' => $this->category,
-            'icon_url' => $this->getIconUrl(), // Your custom model method
+            'icon' => $this->icon,
             'description' => $this->description,
             'sub_skills' => $this->sub_skills ?? [],
             'order' => $this->order,
