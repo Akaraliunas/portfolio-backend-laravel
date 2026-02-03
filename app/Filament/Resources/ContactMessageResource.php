@@ -31,7 +31,20 @@ class ContactMessageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->label('Received')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->copyable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('subject')
+                    ->limit(30),
+                Tables\Columns\IconColumn::make('is_read')
+                    ->boolean()
+                    ->label('Read'),
             ])
             ->filters([
                 //
